@@ -4,8 +4,8 @@ from sqlalchemy import exc
 import json
 from flask_cors import CORS
 
-from database.models import db_drop_and_create_all, setup_db, Drink
-from auth.auth import AuthError, requires_auth
+from .database.models import db_drop_and_create_all, setup_db, Drink
+from .auth.auth import AuthError, requires_auth
 
 app = Flask(__name__)
 setup_db(app)
@@ -28,7 +28,7 @@ db_drop_and_create_all()
     returns status code 200 and json {"success": True, "drinks": drinks} where drinks is the list of drinks
         or appropriate status code indicating reason for failure
 '''
-@app.route('/drink', methods = ['GET'])
+@app.route('/drinks', methods = ['GET'])
 def get_drink():
     drinks = Drink.query.all
 
@@ -220,3 +220,10 @@ def bad_request(error):
         "error": 400,
         "message": 'Bad Request'
     }), 400
+
+
+
+app = Flask(__name__)
+
+if __name__ == "__main__":
+    app.run()
